@@ -3,10 +3,15 @@ use dotenv::dotenv;
 use sqlx::sqlite::SqlitePoolOptions;
 use std::env;
 
-mod auth;
 mod db;
-mod habit;
+mod models;
 mod notifications;
+mod routes;
+
+use crate::db::db::init;
+use crate::notifications::notifications::config;
+use models::*;
+use routes::*;
 
 #[actix_web::main]
 async fn main() -> std::io::Result<()> {
@@ -20,14 +25,14 @@ async fn main() -> std::io::Result<()> {
         .unwrap();
 
     // Initialize the database and create tables (if needed)
-    db::init(&db_pool).await.unwrap();
+    init(&db_pool).await.unwrap();
 
     HttpServer::new(move || {
         App::new()
             .app_data(web::Data::new(db_pool.clone())) // Share database connection
             .configure(auth::config) // Configure authentication routes
             .configure(habit::config) // Configure habit routes
-            .configure(notifications::config) // Configure notifications routes
+            .configure(config) // Configure notifications routes
     })
     .bind("127.0.0.1:8080")?
     .run()
