@@ -1,15 +1,11 @@
-// not properly implemented yet, needs some work
-
 use actix_web::{get, post, web, HttpResponse, Responder};
 use chrono::{DateTime, Utc};
 use sqlx::{Decode, SqlitePool};
 use uuid::Uuid;
-// use serde::{Deserialize, Serialize};
-// use sqlx::{FromRow, Sqlite};
 
 #[derive(serde::Deserialize, serde::Serialize, sqlx::FromRow, Debug, Decode)]
 pub struct Habit {
-    pub id: String, // UUID as a String
+    pub id: String, // passing UUID as a String
     pub name: String,
     pub description: String,
     pub completed: bool,

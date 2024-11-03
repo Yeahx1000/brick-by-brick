@@ -1,3 +1,5 @@
+// will be used for notifications, code not implemented yet
+
 use actix_web::{web, HttpResponse, Responder};
 
 pub fn config(cfg: &mut web::ServiceConfig) {

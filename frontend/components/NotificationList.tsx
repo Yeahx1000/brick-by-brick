@@ -1,7 +1,5 @@
-// frontend/src/components/NotificationList.tsx
-
 const NotificationList = () => {
-    // Logic for fetching and displaying notifications would go here
+    // conditional code for fetching and displaying notifications will go here
     return (
       <div>
         <h2>Your Notifications</h2>

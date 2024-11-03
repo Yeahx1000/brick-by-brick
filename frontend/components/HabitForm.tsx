@@ -1,5 +1,3 @@
-// frontend/src/components/HabitForm.tsx
-
 import { useState } from 'react';
 import axios from 'axios';
 

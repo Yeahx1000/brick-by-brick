@@ -1,4 +1,4 @@
-//will be used for user authentication
+// will be used for user authentication, not implemented yet
 
 use actix_web::{web, HttpResponse, Responder};
 

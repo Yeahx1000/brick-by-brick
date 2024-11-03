@@ -1,5 +1,3 @@
-// frontend/src/components/HabitItem.tsx
-
 import { Habit } from './HabitList';
 
 interface HabitItemProps {

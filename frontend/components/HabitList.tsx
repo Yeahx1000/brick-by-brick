@@ -1,5 +1,3 @@
-// frontend/src/components/HabitList.tsx
-
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 import HabitItem from './HabitItem';
