@@ -1,14 +1,13 @@
 // not properly implemented yet, needs some work
 
 use actix_web::{get, post, web, HttpResponse, Responder};
-use actix_web::{web, HttpResponse};
 use chrono::{DateTime, Utc};
-use serde::{Deserialize, Serialize};
-use sqlx::SqlitePool;
-use sqlx::{FromRow, Sqlite};
+use sqlx::{Decode, SqlitePool};
 use uuid::Uuid;
+// use serde::{Deserialize, Serialize};
+// use sqlx::{FromRow, Sqlite};
 
-#[derive(serde::Deserialize, serde::Serialize)]
+#[derive(serde::Deserialize, serde::Serialize, sqlx::FromRow, Debug, Decode)]
 pub struct Habit {
     pub id: String, // UUID as a String
     pub name: String,
@@ -24,11 +23,16 @@ pub fn config(cfg: &mut web::ServiceConfig) {
 #[get("/habits")]
 async fn get_habits(pool: web::Data<SqlitePool>) -> impl Responder {
     let habits = sqlx::query_as::<_, Habit>("SELECT * FROM habits")
-        .fetch_all(&**pool)
-        .await
-        .unwrap();
+        .fetch_all(pool.get_ref())
+        .await;
 
-    HttpResponse::Ok().json(habits)
+    match habits {
+        Ok(habits) => HttpResponse::Ok().json(habits),
+        Err(err) => {
+            eprintln!("Error fetching habits: {:?}", err);
+            HttpResponse::InternalServerError().body("Failed to fetch habits")
+        }
+    }
 }
 
 #[post("/habits")]

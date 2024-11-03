@@ -13,7 +13,7 @@ async fn main() -> std::io::Result<()> {
     dotenv().ok(); // Load .env file
 
     let database_url =
-        env::var("DATABASE_URL").unwrap_or_else(|_| "sqlite://habits.db".to_string());
+        env::var("DATABASE_URL").unwrap_or_else(|_| "sqlite://db/habits.db".to_string());
     let db_pool = SqlitePoolOptions::new()
         .connect(&database_url)
         .await
